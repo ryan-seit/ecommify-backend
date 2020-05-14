@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
 
   # prevent Rails from using its authenticity token (since backend is acting as an API to avoid 'forbidden' parameters)
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
+  # config.action_controller.default_protect_from_forgery = false
+  skip_before_action :verify_authenticity_token, raise: false
 
   # make sure methods defined below are passed to all other controllers
   helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # User validations
   validates :fullname, presence: true
   validates :fullname, uniqueness: true
-  validates :username, length: { minimum: 4 }
+  validates :fullname, length: { minimum: 4 }
   validates :email, presence: true
   validates :email, uniqueness: true
 
