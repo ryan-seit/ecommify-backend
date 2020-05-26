@@ -61,7 +61,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    bcrypt (3.1.13)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -148,6 +147,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stripe (5.22.0)
     thor (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
@@ -162,11 +162,10 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.7)
-  bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   byebug
   faker (~> 1.9)
-  jwt (~> 2.1)
+  jwt (~> 2.2.1)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
@@ -174,6 +173,7 @@ DEPENDENCIES
   rails (~> 6.0.3)
   spring
   spring-watcher-listen (~> 2.0.0)
+  stripe
   tzinfo-data
 
 RUBY VERSION

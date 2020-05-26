@@ -1,6 +1,8 @@
 class User < ApplicationRecord
-  has_secure_password
-  has_many :products, through: :orders
+
+  # has_secure_password
+
+  has_many :orders
 
   # user validations
   validates :fullname, presence: true
