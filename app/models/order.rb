@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   after_initialize :set_defaults
 
-  belongs_to :user
+  # belongs_to :user
   has_many :line_items
   has_many :products, through: :line_items
 

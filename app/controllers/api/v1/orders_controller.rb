@@ -1,7 +1,7 @@
 class Api::V1::OrdersController < ApplicationController
 
   def index
-    orders = Order.includes(:user)
+    orders = Order.includes(@current_user)
     render json: {status: 'SUCCESS', message: 'Loaded orders', data:orders}, status: :ok
   end
 
@@ -10,12 +10,13 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def create
-    order = Order.create(order_params)
-    if order.valid?
-      render json: { order: OrderSerializer.new(order) }, status: :created
-    else
-      render json: { error: 'failed to create order' }, status: :unprocessable_entity
-    end
+    # order = Order.create(order_params)
+    user = User.find_by(id: session[:user_id])
+
+    Order.create(
+      user: @current_user,
+      total_amount: "0"
+    )
   end
 
   def show
@@ -30,3 +31,9 @@ class Api::V1::OrdersController < ApplicationController
   end
 
 end
+
+# if order.valid?
+#   render json: { order: OrderSerializer.new(order) }, status: :created
+# else
+#   render json: { error: 'failed to create order' }, status: :unprocessable_entity
+# end
