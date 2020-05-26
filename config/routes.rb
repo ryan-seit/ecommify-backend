@@ -3,15 +3,18 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:create]
-      # post '/signup', to: 'users#create'
+      resources :users, only: [:index, :create]
+      post '/signup', to: 'users#create'
       post '/login', to: 'auth#login'
-      get '/auto_login', to: 'auth#auto_login'
-      post '/user_is_authed', to: 'auth#user_is_authed'
+      get '/autologin', to: 'auth#autologin'
+      post '/logout', to: 'auth#logout'
 
-      resources :orders
+      resources :orders, only: [:index, :create]
+      post '/new_order', to: 'orders#create'
+
       resources :products
-      resources :line_items
+      resources :line_items, only: [:index, :create, :destroy]
+
 
     end
   end
