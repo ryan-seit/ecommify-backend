@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  after_initialize :set_defaults
+  # after_initialize :set_defaults
 
   # belongs_to :user
   has_many :line_items
