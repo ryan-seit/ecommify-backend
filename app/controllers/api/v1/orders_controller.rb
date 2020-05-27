@@ -10,18 +10,16 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def create
-    # order = Order.create(order_params)
     user = User.find_by(id: session[:user_id])
+    
+    Order.create(user_id: user, total_amount: "0")
 
-    Order.create(
-      user: @current_user,
-      total_amount: "0"
-    )
   end
 
   def show
-    order = Order.find_by(id: params[:id])
-    render json: order
+    user = User.find_by(id: session[:user_id])
+    order = Order.find_by(user_id: user.id)
+    render json: {status: 'SUCCESS', message: 'Loaded order', data:order}, status: :ok
   end
 
   private

@@ -3,18 +3,27 @@ class Api::V1::LineItemsController < ApplicationController
   # before_action :authenticated
 
   def index
-    line_items = LineItem.includes(@current_order)
+    user = User.find_by(id: session[:user_id])
+    order = Order.find_by(user_id: user.id)
+    # line_items = LineItem.includes(order)
+    line_items = order.products
     render json: {status: 'SUCCESS', message: 'Loaded item', data:line_items}, status: :ok
   end
 
   def create
-    product = Product.find_by(id: params(:product_id))
-    order = Order.find_or_create_by(id: params(:order_id))
+    # byebug
+    product = Product.find_by(id: params[:product][:id])
+    user = User.find_by(id: session[:user_id])
+    order = Order.find_or_create_by(user_id: user.id)
+    # product = Product.find_by(id: params[:product_id])
 
-    line_item = LineItem.find_or_create_by(
-      product: product,
-      order: order
-    )
+    line_item = product.line_items.create(order: order)
+    
+    if line_item.valid?
+      render json: { status: 'SUCCESS', message: 'Created line item', data:line_item }, status: :ok
+    else
+      render json: { errors: line_item.errors.full_messages }, status: :bad_request
+    end
     # if line_item.valid?
     #   render json: { line_item: LineItemSerializer.new(line_item) }, status: :created
     # else
