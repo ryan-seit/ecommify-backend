@@ -8,6 +8,12 @@ class ApplicationController < ActionController::API
     @current_order = Order.find_by(user_id: session[:user_id])
   end
 
+  def current_total
+    user = @current_user
+    order = @current_order
+    @current_total = order.products.sum(:price)
+  end
+
   def logged_in?
     !!current_user
   end

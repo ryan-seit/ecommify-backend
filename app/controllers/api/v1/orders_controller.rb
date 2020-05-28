@@ -10,10 +10,18 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def create
-    user = User.find_by(id: session[:user_id])
+    # user = User.find_by(id: session[:user_id])
+    user = @current_user
+    user.orders
     
-    Order.create(user_id: user, total_amount: "0")
+    Order.create(user_id: user.id, total_amount: 0)
+  end
 
+  def update
+    user = @current_user
+    order = @current_order
+    order_total = user.order.update(:total_amount => order.products.sum(:price))
+    render json: {status: 'SUCCESS', message: 'Updated total', data: order_total}, status: :ok
   end
 
   def show

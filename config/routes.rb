@@ -9,10 +9,12 @@ Rails.application.routes.draw do
       get '/autologin', to: 'auth#autologin'
       post '/logout', to: 'auth#logout'
 
-      resources :orders, only: [:index, :create, :show]
-      post '/new_order', to: 'orders#create'
+      resources :orders, only: [:index, :create, :show, :update]
+      post '/order', to: 'orders#create'
+      patch '/order_update', to: 'orders#update'
 
-      resources :products
+      resources :products, only: [:index, :show]
+
       resources :line_items, only: [:index, :create, :destroy]
       get '/cart', to: 'line_items#index'
       # post '/addtocart', to: 'line_items#create'
