@@ -3,17 +3,16 @@ class ChargesController < ApplicationController
   def create
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
-    order = Order.find(params[:id])
+    order = Order.find(1)
     amount = order.total_amount
 
     charge = Stripe::Charge.create(
       # :customer => customer.id,
       :amount => amount,
-      :description => 'eCommify Store',
+      :description => 'coda store',
       :currency => 'usd',
       :source => params[:token]
     )
-  end
 
   rescue Stripe::CardError => e
     flash[:errors] = e.message

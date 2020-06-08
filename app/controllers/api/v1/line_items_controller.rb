@@ -5,24 +5,23 @@ class Api::V1::LineItemsController < ApplicationController
   def index
     user = User.find_by(id: session[:user_id])
     order = Order.find_by(user_id: user.id)
-    # line_items = LineItem.includes(order)
-    # user = @current_user
-    # order = @current_order
-    line_items = order.products
-    render json: {status: 'SUCCESS', message: 'Loaded item', data:line_items}, status: :ok
+    line_items = order.line_items
+    # render json: {status: 'SUCCESS', message: 'Loaded item', data:line_items}, status: :ok
+    render json: line_items, include: :product
   end
 
   def create
-    # byebug
     # product = Product.find_by(id: params[:product_id])
     product = Product.find_by(id: params[:product][:id])
     user = User.find_by(id: session[:user_id])
     order = Order.find_or_create_by(user_id: user.id)
     line_item = product.line_items.create(order_id: order.id)
-    order_total = order.update(:total_amount => order.products.sum(:price))
-
+    
     if line_item.valid?
-      render json: { status: 'SUCCESS', message: 'Created line item and updated total', data:line_item }, status: :ok
+      order.update(:total_amount => order.products.sum(:price))
+      # byebug
+      render json: line_item, include: :product
+      # render json: { status: 'SUCCESS', message: 'Created line item and updated total', data:line_item }, status: :ok
     else
       render json: { errors: line_item.errors.full_messages }, status: :bad_request
     end
