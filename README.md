@@ -1,13 +1,9 @@
 # eCommify README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Welcome to the eCommify Readme!
 
-Things you may want to cover:
-
-* Ruby version
-## Ruby Version 2.6.3
-## Rails Version 6.0.3
+* Ruby version 2.6.3
+* Rails version 6.0.3
 
 * System dependencies
 

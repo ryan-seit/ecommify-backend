@@ -1,8 +1,12 @@
 class Api::V1::ProductsController < ApplicationController
 
   def index
-    products = Product.order('category ASC');
+    products = Product.all
     render json: {status: 'SUCCESS', message:'Loaded products', data:products}, status: :ok
+  end
+
+  def bras
+    # @bra_product_items = Product.
   end
 
   def show
